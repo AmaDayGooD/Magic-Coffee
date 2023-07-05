@@ -30,7 +30,6 @@ fun MainScreen(){
     Box(
         modifier = Modifier
             .fillMaxSize()
-            //
             .background(color = Color(29, 35, 53, 94)),
         contentAlignment = Alignment.Center,
 
@@ -42,7 +41,7 @@ fun MainScreen(){
                 modifier = Modifier.padding(bottom = 200.dp)
             )
         Text(
-            text = "Magic Coffee",
+            text = "Magic coffee",
             fontSize = 64.sp,
             color = Color.White,
             fontFamily = FontFamily(Font(R.font.reeniebeanie)),

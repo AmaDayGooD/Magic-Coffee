@@ -3,7 +3,7 @@ package com.example.magiccoffe
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.magiccoffe.screens.MainScreen
+import com.example.magiccoffe.screens.OrderScreen
 import com.example.magiccoffe.ui.theme.MagicCoffeTheme
 
 class MainActivity : ComponentActivity() {
@@ -11,7 +11,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MagicCoffeTheme {
-                    MainScreen()
+                OrderScreen()
+                //MainScreen()
             }
         }
     }

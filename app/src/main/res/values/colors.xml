@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lessdark">#20FFFFFF</color>
+    <color name="backCart">#F7F8FB</color>
 </resources>
