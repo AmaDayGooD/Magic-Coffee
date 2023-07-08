@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MagicCoffe</string>
-    <string name="title_activity_order_screen">orderScreen</string>
+    <string name="title_activity_menu_cafe_screen">MenuCafeScreen</string>
+    <string name="title_activity_menu_cafe">MenuCafe</string>
 </resources>

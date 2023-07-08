@@ -1,4 +1,4 @@
-package com.example.magiccoffe.screens.ui.theme
+package com.example.magiccoffe.ui.theme.screens.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

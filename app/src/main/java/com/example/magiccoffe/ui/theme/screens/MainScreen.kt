@@ -1,4 +1,4 @@
-package com.example.magiccoffe.screens
+package com.example.magiccoffe.ui.theme.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,12 +15,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.magiccoffe.R
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun MainScreen(){
     Image(painter = painterResource(id = R.drawable.backgroundlogo),
