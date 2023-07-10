@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -19,11 +20,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.magiccoffe.R
 
-//@Preview(showBackground = true)
 @Composable
-fun MainScreen(){
+fun FirstScreen(function: () -> Unit) {
     Image(painter = painterResource(id = R.drawable.backgroundlogo),
-        contentDescription = "img", modifier = Modifier.fillMaxSize(),
+        contentDescription = "img",
+        modifier = Modifier.fillMaxSize()
+            .onFocusEvent { function() },
         contentScale = ContentScale.Crop
         )
     Box(
@@ -47,6 +49,6 @@ fun MainScreen(){
             fontWeight = FontWeight(10),
             modifier = Modifier.padding(bottom = 110.dp)
         )
-
     }
+
 }

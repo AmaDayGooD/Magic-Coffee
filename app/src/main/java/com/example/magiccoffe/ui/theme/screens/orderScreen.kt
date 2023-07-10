@@ -27,7 +27,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.magiccoffe.R
@@ -36,14 +35,16 @@ import kotlin.math.roundToInt
 
 
 @Composable
-@Preview(showBackground = true)
-fun OrderScreen() {
+//@Preview(showBackground = true)
+fun OrderScreen(
+    //onClick: () -> Unit
+) {
     val counter = remember { mutableStateOf(1) }
     val cost = remember { mutableStateOf(250.0) }
     val summ = remember { mutableStateOf(cost.value * counter.value) }
     if (summ.value < cost.value) summ.value = cost.value
-    Column(
-        verticalArrangement = Arrangement.Top,
+    Card(
+        //verticalArrangement = Arrangement.Top,
         modifier = Modifier
             .fillMaxSize()
             .background(Color(color = white.hashCode()))
@@ -52,13 +53,14 @@ fun OrderScreen() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 10.dp),
+                .padding(bottom = 10.dp, start = 10.dp, end = 10.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Icon(
                 imageVector = Icons.Filled.ArrowBack,
                 contentDescription = "back",
-                modifier = Modifier.size(width = 24.dp, height = 24.dp)
+                modifier = Modifier
+                    .size(width = 24.dp, height = 24.dp)
                     //.clickable { onClick() }
             )
             Text(
@@ -73,8 +75,9 @@ fun OrderScreen() {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.basket),
                 contentDescription = "Shoping",
-                modifier = Modifier.size(width = 24.dp, height = 24.dp)
-                //modifier = Modifier.clickable(onClick = onClick)
+                modifier = Modifier
+                    .size(width = 24.dp, height = 24.dp)
+                    //.clickable { onTwoClick() }
             )
         }
         Card(
@@ -178,7 +181,8 @@ fun OrderScreen() {
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.clickable { selectedRisetto.value = "one" }
+                        modifier = Modifier
+                            .clickable { selectedRisetto.value = "one" }
                             .padding(start = 5.dp, end = 5.dp)
                     ) {
                         Text(text = "Один", color = black)
@@ -224,7 +228,7 @@ fun OrderScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 .size(width = 50.dp, height = 60.dp)
-                .padding(end =20.dp),
+                .padding(end = 20.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -272,7 +276,7 @@ fun OrderScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 //.size(width = 50.dp, height = 70.dp)
-                .padding(top = 10.dp, bottom = 10.dp, end=15.dp),
+                .padding(top = 10.dp, bottom = 10.dp, end = 15.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -427,7 +431,8 @@ fun OrderScreen() {
                             start = Offset(0f, 0f), // top left corner
                             end = Offset(100f, 400f)
                         )
-                    ).clickable {  }
+                    )
+                    .clickable { }
                     .padding(15.dp), horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(
@@ -461,12 +466,12 @@ fun OrderScreen() {
         Card(shape = RoundedCornerShape(30.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable {  }
+                .clickable { }
         ) {
             Row(
                 modifier = Modifier
                     .background(Color(color = button.hashCode()))
-                    .clickable {  }
+                    .clickable { }
                     .padding(15.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
