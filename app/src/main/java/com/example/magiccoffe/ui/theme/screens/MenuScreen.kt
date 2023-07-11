@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.magiccoffe.MainViewModal
 import com.example.magiccoffe.R
@@ -34,10 +35,9 @@ import com.example.magiccoffe.ui.theme.screens.ui.theme.white
 @Composable
 fun MenuScreen(
     mainViewModal: MainViewModal = viewModel(factory = MainViewModal.factory),
-    onClick: () -> Unit
+    navController: NavController
 ) {
     val itemsList = mainViewModal.itemlist.collectAsState(initial = emptyList())
-
     Column(
         modifier = Modifier
             .padding(top = 10.dp)
@@ -111,22 +111,12 @@ fun MenuScreen(
                     ) {
                         items(itemsList.value) { item ->
                             Card(
+
                                 modifier = Modifier
                                     .size(width = 150.dp, height = 160.dp)
                                     .background(Color(color = button.hashCode()))
-                                    .clickable { onClick()
-                                        /*
-                                        navController.navigate(
-                                            "OrderScreen",
-                                            arguments = listOf(
-                                                navArgument("name"){
-                                                    type = NavType.StringType
-
-                                                }
-                                            )
-                                            )
-                                         */
-
+                                    .clickable { val cutUrl = cut(item.imageCofe)
+                                        navController.navigate("OrderScreen/"+item.nameCofe+"/"+item.costCofe+"/"+ cutUrl)
                                     }, elevation = 0.dp,
                                 shape = RoundedCornerShape(12.dp),
                                 border = BorderStroke(1.dp, color = black)
@@ -175,8 +165,13 @@ fun MenuScreen(
                 }
 
             }
+
         }
 
     }
+}
+
+fun cut(url: String): String {
+    return url.removePrefix("https://i.imgur.com/")
 }
 

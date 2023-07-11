@@ -1,7 +1,6 @@
 package com.example.magiccoffe.ui.theme.screens
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,13 +21,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.magiccoffe.R
 import com.example.magiccoffe.ui.theme.screens.ui.theme.*
 import kotlin.math.roundToInt
@@ -36,11 +35,15 @@ import kotlin.math.roundToInt
 
 @Composable
 //@Preview(showBackground = true)
-fun OrderScreen(
+fun OrderScreen(name: String?, image: String?, costCofe: Float?,
     onClick: () -> Unit
 ) {
-    val counter = remember { mutableStateOf(1) }
-    val cost = remember { mutableStateOf(250.0) }
+    val costCofeSmall = costCofe?.times(1)!!.toDouble()
+    val costCofeMedium = costCofe.times(1.3)
+    val costCofeBig = costCofe.times(1.6)
+
+    val counter = remember { mutableStateOf(1)}
+    val cost = remember { mutableStateOf(costCofeBig) }
     val summ = remember { mutableStateOf(cost.value * counter.value) }
     if (summ.value < cost.value) summ.value = cost.value
     Column(
@@ -82,10 +85,11 @@ fun OrderScreen(
             elevation = 0.dp,
             shape = RoundedCornerShape(12.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.mugcoffee),
+            AsyncImage(
+                model = "https://i.imgur.com/$image",
                 contentDescription = "coffee",
-                modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
+                modifier = Modifier.fillMaxHeight(0.2f)
+                    .padding(top = 10.dp, bottom = 10.dp)
             )
         }
         Row(
@@ -97,7 +101,7 @@ fun OrderScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Капучино", style = TextStyle(
+                text = "$name", style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppinsmedium)),
                     fontSize = 14.sp,
                 )
@@ -284,7 +288,7 @@ fun OrderScreen(
                         modifier = Modifier.size(22.dp),
                         oneColor.value
                     )
-                    Text(text = "250", modifier = Modifier.padding(top = 5.dp), oneColor.value)
+                    Text(text = "$costCofeSmall", modifier = Modifier.padding(top = 5.dp), oneColor.value)
                 }
                 Column(
                     modifier = Modifier
@@ -298,7 +302,8 @@ fun OrderScreen(
                         modifier = Modifier.size(31.dp),
                         twoColor.value
                     )
-                    Text(text = "350", modifier = Modifier.padding(top = 5.dp), twoColor.value)
+
+                    Text(text = "$costCofeMedium", modifier = Modifier.padding(top = 5.dp), twoColor.value)
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.clickable { selectedItem.value = "tree" }) {
@@ -308,29 +313,30 @@ fun OrderScreen(
                         modifier = Modifier.size(38.dp),
                         treeColor.value
                     )
+
                     Text(
-                        text = "450", modifier = Modifier.padding(top = 5.dp), treeColor.value
+                        text = "$costCofeBig", modifier = Modifier.padding(top = 5.dp), treeColor.value
                     )
                     when (selectedItem.value) {
                         "one" -> {
                             oneColor.value = Color.Black
                             twoColor.value = Color.LightGray
                             treeColor.value = Color.LightGray
-                            cost.value = 250.0
+                            cost.value = costCofeSmall
                             summ.value = cost.value * counter.value
                         }
                         "two" -> {
                             oneColor.value = Color.LightGray
                             twoColor.value = Color.Black
                             treeColor.value = Color.LightGray
-                            cost.value = 350.0
+                            cost.value = costCofeMedium
                             summ.value = cost.value * counter.value
                         }
                         "tree" -> {
                             oneColor.value = Color.LightGray
                             twoColor.value = Color.LightGray
                             treeColor.value = Color.Black
-                            cost.value = 450.0
+                            cost.value = costCofeBig
                             summ.value = cost.value * counter.value
                         }
                     }
