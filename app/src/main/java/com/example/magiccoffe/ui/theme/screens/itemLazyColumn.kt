@@ -15,6 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.magiccoffe.roomDB.Menu
 import com.example.magiccoffe.ui.theme.screens.ui.theme.black
@@ -22,13 +24,17 @@ import com.example.magiccoffe.ui.theme.screens.ui.theme.button
 
 @Composable
 fun itemLazyColumn(
-    item: Menu,
-    onClick: () -> Unit
+    item: Menu
 ) {
+    val navController: NavHostController = rememberNavController()
+
     Card(
-        modifier = Modifier.size(width = 150.dp, height = 160.dp)
+        modifier = Modifier
+            .size(width = 150.dp, height = 160.dp)
             .background(Color(color = button.hashCode()))
-        .clickable { onClick },
+            .clickable {
+                navController.navigate("OrderScreen")
+            },
         elevation = 0.dp,
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(1.dp, color = black)

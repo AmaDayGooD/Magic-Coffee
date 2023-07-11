@@ -27,7 +27,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.magiccoffe.R
@@ -36,9 +35,9 @@ import kotlin.math.roundToInt
 
 
 @Composable
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 fun OrderScreen(
-    //onClick: () -> Unit
+    onClick: () -> Unit
 ) {
     val counter = remember { mutableStateOf(1) }
     val cost = remember { mutableStateOf(250.0) }
@@ -61,7 +60,7 @@ fun OrderScreen(
                 imageVector = Icons.Filled.ArrowBack,
                 contentDescription = "back",
                 modifier = Modifier.size(width = 24.dp, height = 24.dp)
-                //.clickable { onClick() }
+                .clickable { onClick() }
             )
             Text(
                 text = "Заказ", style = TextStyle(
@@ -443,5 +442,4 @@ fun OrderScreen(
             }
         }
     }
-
 }

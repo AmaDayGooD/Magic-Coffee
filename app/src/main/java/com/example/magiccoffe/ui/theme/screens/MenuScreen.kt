@@ -2,6 +2,7 @@ package com.example.magiccoffe.ui.theme.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.magiccoffe.MainViewModal
 import com.example.magiccoffe.R
 import com.example.magiccoffe.ui.theme.screens.ui.theme.black
@@ -31,7 +33,8 @@ import com.example.magiccoffe.ui.theme.screens.ui.theme.white
 
 @Composable
 fun MenuScreen(
-    mainViewModal: MainViewModal = viewModel(factory = MainViewModal.factory)
+    mainViewModal: MainViewModal = viewModel(factory = MainViewModal.factory),
+    onClick: () -> Unit
 ) {
     val itemsList = mainViewModal.itemlist.collectAsState(initial = emptyList())
 
@@ -68,12 +71,12 @@ fun MenuScreen(
                     modifier = Modifier
                         .padding(end = 20.dp)
                         .size(width = 26.dp, height = 26.dp)
+                        .clickable { }
                 )
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.profile),
                     contentDescription = "basket",
                     modifier = Modifier
-
                         .size(width = 26.dp, height = 26.dp)
                 )
             }
@@ -107,8 +110,38 @@ fun MenuScreen(
                         modifier = Modifier.background(color = button)
                     ) {
                         items(itemsList.value) { item ->
-                            itemLazyColumn(item){
+                            Card(
+                                modifier = Modifier
+                                    .size(width = 150.dp, height = 160.dp)
+                                    .background(Color(color = button.hashCode()))
+                                    .clickable { onClick()
+                                        /*
+                                        navController.navigate(
+                                            "OrderScreen",
+                                            arguments = listOf(
+                                                navArgument("name"){
+                                                    type = NavType.StringType
 
+                                                }
+                                            )
+                                            )
+                                         */
+
+                                    }, elevation = 0.dp,
+                                shape = RoundedCornerShape(12.dp),
+                                border = BorderStroke(1.dp, color = black)
+                            ) {
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    AsyncImage(
+                                        model = item.imageCofe,
+                                        contentDescription = "image",
+                                        modifier = Modifier.fillMaxSize(0.8f)
+                                    )
+                                    Text(text = item.nameCofe)
+                                }
                             }
                         }
                     }
@@ -146,3 +179,4 @@ fun MenuScreen(
 
     }
 }
+
