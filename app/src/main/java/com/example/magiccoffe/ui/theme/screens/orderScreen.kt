@@ -37,7 +37,7 @@ import kotlin.math.roundToInt
 @Composable
 //@Preview(showBackground = true)
 fun OrderScreen(
-    //onClick: () -> Unit
+    onClick: () -> Unit
 ) {
     val counter = remember { mutableStateOf(1) }
     val cost = remember { mutableStateOf(250.0) }
@@ -61,7 +61,7 @@ fun OrderScreen(
                 contentDescription = "back",
                 modifier = Modifier
                     .size(width = 24.dp, height = 24.dp)
-                    //.clickable { onClick() }
+                    .clickable { onClick() }
             )
             Text(
                 text = "Заказ",
