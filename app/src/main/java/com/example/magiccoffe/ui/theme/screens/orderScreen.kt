@@ -27,6 +27,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.magiccoffe.R
@@ -35,15 +36,15 @@ import kotlin.math.roundToInt
 
 
 @Composable
-//@Preview(showBackground = true)
+@Preview(showBackground = true)
 fun OrderScreen(
-    onClick: () -> Unit
+    //onClick: () -> Unit
 ) {
     val counter = remember { mutableStateOf(1) }
     val cost = remember { mutableStateOf(250.0) }
     val summ = remember { mutableStateOf(cost.value * counter.value) }
     if (summ.value < cost.value) summ.value = cost.value
-    Card(
+    Column(
         //verticalArrangement = Arrangement.Top,
         modifier = Modifier
             .fillMaxSize()
@@ -59,14 +60,11 @@ fun OrderScreen(
             Icon(
                 imageVector = Icons.Filled.ArrowBack,
                 contentDescription = "back",
-                modifier = Modifier
-                    .size(width = 24.dp, height = 24.dp)
-                    .clickable { onClick() }
+                modifier = Modifier.size(width = 24.dp, height = 24.dp)
+                //.clickable { onClick() }
             )
             Text(
-                text = "Заказ",
-                style = TextStyle
-                    (
+                text = "Заказ", style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppinsmedium)),
                     fontSize = 16.sp,
                 )
@@ -75,14 +73,12 @@ fun OrderScreen(
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.basket),
                 contentDescription = "Shoping",
-                modifier = Modifier
-                    .size(width = 24.dp, height = 24.dp)
-                    //.clickable { onTwoClick() }
+                modifier = Modifier.size(width = 24.dp, height = 24.dp)
+                //.clickable { onTwoClick() }
             )
         }
         Card(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             backgroundColor = backcard,
             elevation = 0.dp,
             shape = RoundedCornerShape(12.dp)
@@ -102,9 +98,7 @@ fun OrderScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Капучино",
-                style = TextStyle
-                    (
+                text = "Капучино", style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppinsmedium)),
                     fontSize = 14.sp,
                 )
@@ -126,24 +120,20 @@ fun OrderScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(start = 5.dp, end = 5.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.Remove,
+                    Icon(imageVector = Icons.Filled.Remove,
                         contentDescription = "stepper",
                         Modifier
                             .size(16.dp)
-                            .clickable { counter.value--; summ.value = counter.value * cost.value }
-                    )
+                            .clickable { counter.value--; summ.value = counter.value * cost.value })
                     Text(text = counter.value.toString())
-                    Icon(
-                        imageVector = Icons.Filled.Add,
+                    Icon(imageVector = Icons.Filled.Add,
                         contentDescription = "stepper",
                         Modifier
                             .size(16.dp)
                             .clickable {
                                 counter.value++
                                 summ.value = counter.value * cost.value
-                            }
-                    )
+                            })
                 }
             }
         }
@@ -158,9 +148,7 @@ fun OrderScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Ристретто",
-                style = TextStyle
-                    (
+                text = "Ристретто", style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppinsmedium)),
                     fontSize = 14.sp,
                 )
@@ -178,13 +166,11 @@ fun OrderScreen(
                     shape = RoundedCornerShape(50.dp),
                     border = BorderStroke(1.dp, color = oneColor.value)
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
+                    Row(horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .clickable { selectedRisetto.value = "one" }
-                            .padding(start = 5.dp, end = 5.dp)
-                    ) {
+                            .padding(start = 5.dp, end = 5.dp)) {
                         Text(text = "Один", color = black)
                     }
                 }
@@ -196,8 +182,7 @@ fun OrderScreen(
                     shape = RoundedCornerShape(50.dp),
                     border = BorderStroke(1.dp, color = twoColor.value)
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
+                    Row(horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .clickable { selectedRisetto.value = "two" }
@@ -233,9 +218,7 @@ fun OrderScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "На месте / навынос",
-                style = TextStyle
-                    (
+                text = "На месте / навынос", style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppinsmedium)),
                     fontSize = 14.sp,
                 )
@@ -245,8 +228,7 @@ fun OrderScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = ImageVector
-                        .vectorResource(id = R.drawable.nameste),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.nameste),
                     contentDescription = "на_вынос",
                     modifier = Modifier
                         .padding(end = 20.dp)
@@ -254,8 +236,7 @@ fun OrderScreen(
                     tint = colorOnTheSpot.value
                 )
                 Icon(
-                    imageVector = ImageVector
-                        .vectorResource(id = R.drawable.navinos),
+                    imageVector = ImageVector.vectorResource(id = R.drawable.navinos),
                     contentDescription = "с_собой",
                     modifier = Modifier.clickable { state.value = "two" },
                     tint = colorTakeaway.value
@@ -281,9 +262,7 @@ fun OrderScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Объем, мл",
-                style = TextStyle
-                    (
+                text = "Объем, мл", style = TextStyle(
                     fontFamily = FontFamily(Font(R.font.poppinsmedium)),
                     fontSize = 14.sp,
                 )
@@ -299,14 +278,11 @@ fun OrderScreen(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.clickable { selectedItem.value = "one" }
-                ) {
+                    modifier = Modifier.clickable { selectedItem.value = "one" }) {
                     Icon(
-                        imageVector = ImageVector
-                            .vectorResource(id = R.drawable.volumesvg),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.volumesvg),
                         contentDescription = "volume",
-                        modifier = Modifier
-                            .size(22.dp),
+                        modifier = Modifier.size(22.dp),
                         oneColor.value
                     )
                     Text(text = "250", modifier = Modifier.padding(top = 5.dp), oneColor.value)
@@ -318,24 +294,20 @@ fun OrderScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Icon(
-                        imageVector = ImageVector
-                            .vectorResource(id = R.drawable.volumesvg),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.volumesvg),
                         contentDescription = "volume",
-                        modifier = Modifier
-                            .size(31.dp),
+                        modifier = Modifier.size(31.dp),
                         twoColor.value
                     )
                     Text(text = "350", modifier = Modifier.padding(top = 5.dp), twoColor.value)
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.clickable { selectedItem.value = "tree" }
-                ) {
+                    modifier = Modifier.clickable { selectedItem.value = "tree" }) {
                     Icon(
-                        imageVector = ImageVector
-                            .vectorResource(id = R.drawable.volumesvg),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.volumesvg),
                         contentDescription = "volume",
-                        modifier = Modifier
-                            .size(38.dp), treeColor.value
+                        modifier = Modifier.size(38.dp),
+                        treeColor.value
                     )
                     Text(
                         text = "450", modifier = Modifier.padding(top = 5.dp), treeColor.value
@@ -378,8 +350,7 @@ fun OrderScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Приготовить к определенному \n" +
-                        "времени сегодня?"
+                text = "Приготовить к определенному \n" + "времени сегодня?"
             )
             Switch(
                 modifier = Modifier.scale(scale = 1.5f),
@@ -406,7 +377,8 @@ fun OrderScreen(
                     elevation = 0.dp,
                 ) {
                     Text(
-                        text = "18 : 10", modifier = Modifier
+                        text = "18 : 10",
+                        modifier = Modifier
                             .background(color = backcard)
                             .padding(10.dp)
                     )
@@ -415,26 +387,20 @@ fun OrderScreen(
             }
         }
         Card(
-            elevation = 0.dp,
-            shape = RoundedCornerShape(16.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-            ) {
-            Row(
-                modifier = Modifier
-                    .background(
-                        brush = Brush.linearGradient(
-                            colors = listOf(
-                                Color(color = gradColorTwo.hashCode()),
-                                Color(color = gradColorOne.hashCode())
-                            ),
-                            start = Offset(0f, 0f), // top left corner
-                            end = Offset(100f, 400f)
-                        )
+            elevation = 0.dp, shape = RoundedCornerShape(16.dp), modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(modifier = Modifier
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            Color(color = gradColorTwo.hashCode()),
+                            Color(color = gradColorOne.hashCode())
+                        ), start = Offset(0f, 0f), // top left corner
+                        end = Offset(100f, 400f)
                     )
-                    .clickable { }
-                    .padding(15.dp), horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+                )
+                .clickable { }
+                .padding(15.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -446,7 +412,8 @@ fun OrderScreen(
                     Text(text = "Конструктор кофемана", color = white)
                 }
                 Icon(
-                    imageVector = Icons.Filled.ChevronRight, contentDescription = "Chevron Right",
+                    imageVector = Icons.Filled.ChevronRight,
+                    contentDescription = "Chevron Right",
                     tint = white
                 )
             }
@@ -463,23 +430,18 @@ fun OrderScreen(
                 fontFamily = FontFamily(Font(R.font.poppinsmedium))
             )
         }
-        Card(shape = RoundedCornerShape(30.dp),
-            modifier = Modifier
-                .fillMaxWidth()
+        Card(shape = RoundedCornerShape(30.dp), modifier = Modifier
+            .fillMaxWidth()
+            .clickable { }) {
+            Row(modifier = Modifier
+                .background(Color(color = button.hashCode()))
                 .clickable { }
-        ) {
-            Row(
-                modifier = Modifier
-                    .background(Color(color = button.hashCode()))
-                    .clickable { }
-                    .padding(15.dp),
+                .padding(15.dp),
                 horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+                verticalAlignment = Alignment.CenterVertically) {
                 Text(text = "Далее", color = white)
             }
         }
     }
 
 }
-
