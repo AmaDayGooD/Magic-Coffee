@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Menu::class,Establishment::class], version = 1, exportSchema = false)
+@Database(entities = [Menu::class,Establishment::class,Users::class], version = 2, exportSchema = false)
 abstract class DataBase() : RoomDatabase(){
 abstract val dao : MenuDao
     companion object{

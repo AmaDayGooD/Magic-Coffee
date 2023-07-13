@@ -1,5 +1,6 @@
 package com.example.magiccoffe.ui.theme.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -24,15 +26,26 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.magiccoffe.MainViewModal
 import com.example.magiccoffe.R
+import com.example.magiccoffe.roomDB.Users
 import com.example.magiccoffe.ui.theme.screens.ui.theme.black
 import com.example.magiccoffe.ui.theme.screens.ui.theme.border
 import com.example.magiccoffe.ui.theme.screens.ui.theme.button
 import com.example.magiccoffe.ui.theme.screens.ui.theme.white
+import java.util.*
+
+fun generateUniqueId(): Int {
+    val random = Random()
+    return random.nextInt(Int.MAX_VALUE)
+}
 
 @Composable
-fun Registration(navController: NavController) {
+fun Registration(mainViewModal: MainViewModal = viewModel(factory = MainViewModal.factory)
+                 ,navController: NavController) {
+    val mContext = LocalContext.current
     val nameUser = remember { mutableStateOf(TextFieldValue("")) }
     val numberPhone = remember { mutableStateOf(TextFieldValue("")) }
     val emailUser = remember { mutableStateOf(TextFieldValue("")) }
@@ -57,13 +70,15 @@ fun Registration(navController: NavController) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "",
-                    modifier = Modifier.padding(top = 10.dp).clickable {
-                        navController.navigate("Authorization") {
-                            popUpTo("Authorization"){
-                                inclusive=true
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .clickable {
+                            navController.navigate("Authorization") {
+                                popUpTo("Authorization") {
+                                    inclusive = true
+                                }
                             }
-                        }
-                    },
+                        },
                     tint = black
                 )
             }
@@ -280,7 +295,17 @@ fun Registration(navController: NavController) {
                 Card(
                     modifier = Modifier
                         .size(60.dp, 60.dp)
-                        .clickable { navController.navigate("MapScreen") },
+                        .clickable {
+                            val user = Users(
+                                user_id = generateUniqueId(),
+                                nameUser = nameUser.value.text,
+                                passwordUser = passwordUser.value.text,
+                                numberPhoneUser = numberPhone.value.text,
+                                emailUser = emailUser.value.text
+                            )
+                            mainViewModal.insertUser(user)
+                            Toast.makeText(mContext,"Создание пользователя: ${nameUser.value.text} прошло успешно ${nameUser.value.text}", Toast.LENGTH_SHORT).show()
+                        },
                     backgroundColor = button,
                     elevation = 0.dp,
                     shape = RoundedCornerShape(50.dp),
