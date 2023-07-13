@@ -35,14 +35,15 @@ import kotlin.math.roundToInt
 
 @Composable
 //@Preview(showBackground = true)
-fun OrderScreen(name: String?, image: String?, costCofe: Float?,
+fun OrderScreen(
+    name: String?, image: String?, costCofe: Float?,
     onClick: () -> Unit
 ) {
     val costCofeSmall = costCofe?.times(1)!!.toDouble()
     val costCofeMedium = costCofe.times(1.3)
     val costCofeBig = costCofe.times(1.6)
 
-    val counter = remember { mutableStateOf(1)}
+    val counter = remember { mutableStateOf(1) }
     val cost = remember { mutableStateOf(costCofeBig) }
     val summ = remember { mutableStateOf(cost.value * counter.value) }
     if (summ.value < cost.value) summ.value = cost.value
@@ -62,8 +63,9 @@ fun OrderScreen(name: String?, image: String?, costCofe: Float?,
             Icon(
                 imageVector = Icons.Filled.ArrowBack,
                 contentDescription = "back",
-                modifier = Modifier.size(width = 24.dp, height = 24.dp)
-                .clickable { onClick() }
+                modifier = Modifier
+                    .size(width = 24.dp, height = 24.dp)
+                    .clickable { onClick() }
             )
             Text(
                 text = "Заказ", style = TextStyle(
@@ -88,7 +90,8 @@ fun OrderScreen(name: String?, image: String?, costCofe: Float?,
             AsyncImage(
                 model = "https://i.imgur.com/$image",
                 contentDescription = "coffee",
-                modifier = Modifier.fillMaxHeight(0.2f)
+                modifier = Modifier
+                    .fillMaxHeight(0.2f)
                     .padding(top = 10.dp, bottom = 10.dp)
             )
         }
@@ -288,7 +291,11 @@ fun OrderScreen(name: String?, image: String?, costCofe: Float?,
                         modifier = Modifier.size(22.dp),
                         oneColor.value
                     )
-                    Text(text = "$costCofeSmall", modifier = Modifier.padding(top = 5.dp), oneColor.value)
+                    Text(
+                        text = "$costCofeSmall",
+                        modifier = Modifier.padding(top = 5.dp),
+                        oneColor.value
+                    )
                 }
                 Column(
                     modifier = Modifier
@@ -303,7 +310,11 @@ fun OrderScreen(name: String?, image: String?, costCofe: Float?,
                         twoColor.value
                     )
 
-                    Text(text = "$costCofeMedium", modifier = Modifier.padding(top = 5.dp), twoColor.value)
+                    Text(
+                        text = "$costCofeMedium",
+                        modifier = Modifier.padding(top = 5.dp),
+                        twoColor.value
+                    )
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.clickable { selectedItem.value = "tree" }) {
@@ -315,7 +326,9 @@ fun OrderScreen(name: String?, image: String?, costCofe: Float?,
                     )
 
                     Text(
-                        text = "$costCofeBig", modifier = Modifier.padding(top = 5.dp), treeColor.value
+                        text = "$costCofeBig",
+                        modifier = Modifier.padding(top = 5.dp),
+                        treeColor.value
                     )
                     when (selectedItem.value) {
                         "one" -> {

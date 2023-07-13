@@ -9,13 +9,15 @@ import com.example.magiccoffe.roomDB.DataBase
 class MainViewModal(database: DataBase) : ViewModel() {
 
     val itemlist = database.dao.getAll()
+    val estList = database.dao.getAllEst()
 
     companion object{
         val factory: ViewModelProvider.Factory = object: ViewModelProvider.Factory{
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(
                 modelClass: Class<T>,
-                extras: CreationExtras): T {
+                extras: CreationExtras
+            ): T {
                 val database = (checkNotNull(extras[APPLICATION_KEY]) as App).dataBase
                 return MainViewModal(database) as T
             }
@@ -23,3 +25,4 @@ class MainViewModal(database: DataBase) : ViewModel() {
     }
 
 }
+

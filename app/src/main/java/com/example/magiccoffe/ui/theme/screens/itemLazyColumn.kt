@@ -44,11 +44,11 @@ fun itemLazyColumn(
             verticalArrangement = Arrangement.Center
         ) {
             AsyncImage(
-                model = item.imageCofe,
+                model = item.image_url,
                 contentDescription = "image",
                 modifier = Modifier.fillMaxSize(0.8f)
             )
-            Text(text = item.nameCofe)
+            Text(text = item.coffee_name)
         }
     }
 }

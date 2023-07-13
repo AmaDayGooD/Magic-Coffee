@@ -3,4 +3,5 @@
     <string name="title_activity_menu_cafe_screen">MenuCafeScreen</string>
     <string name="title_activity_menu_cafe">MenuCafe</string>
     <string name="title_activity_item_lazy_column">itemLazyColumn</string>
+    <string name="title_activity_map_screen">MapScreen</string>
 </resources>

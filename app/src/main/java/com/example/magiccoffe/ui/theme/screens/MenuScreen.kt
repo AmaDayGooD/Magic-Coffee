@@ -27,6 +27,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.magiccoffe.MainViewModal
 import com.example.magiccoffe.R
+import com.example.magiccoffe.roomDB.Menu
 import com.example.magiccoffe.ui.theme.screens.ui.theme.black
 import com.example.magiccoffe.ui.theme.screens.ui.theme.border
 import com.example.magiccoffe.ui.theme.screens.ui.theme.button
@@ -35,9 +36,19 @@ import com.example.magiccoffe.ui.theme.screens.ui.theme.white
 @Composable
 fun MenuScreen(
     mainViewModal: MainViewModal = viewModel(factory = MainViewModal.factory),
-    navController: NavController
+    navController: NavController,
+    cafeID: Int?
 ) {
     val itemsList = mainViewModal.itemlist.collectAsState(initial = emptyList())
+    val menuList : MutableList<Menu> = mutableListOf()
+    itemsList.value.forEach()
+    {
+        if(it.cafe_id==cafeID){
+            menuList.add(it)
+        }
+
+    }
+
     Column(
         modifier = Modifier
             .padding(top = 10.dp)
@@ -109,14 +120,14 @@ fun MenuScreen(
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         modifier = Modifier.background(color = button)
                     ) {
-                        items(itemsList.value) { item ->
+                        items(menuList) { item ->
                             Card(
 
                                 modifier = Modifier
                                     .size(width = 150.dp, height = 160.dp)
                                     .background(Color(color = button.hashCode()))
-                                    .clickable { val cutUrl = cut(item.imageCofe)
-                                        navController.navigate("OrderScreen/"+item.nameCofe+"/"+item.costCofe+"/"+ cutUrl)
+                                    .clickable { val cutUrl = cut(item.image_url)
+                                        navController.navigate("OrderScreen/"+item.coffee_name+"/"+item.price+"/"+ cutUrl)
                                     }, elevation = 0.dp,
                                 shape = RoundedCornerShape(12.dp),
                                 border = BorderStroke(1.dp, color = black)
@@ -126,11 +137,11 @@ fun MenuScreen(
                                     verticalArrangement = Arrangement.Center
                                 ) {
                                     AsyncImage(
-                                        model = item.imageCofe,
+                                        model = item.image_url,
                                         contentDescription = "image",
                                         modifier = Modifier.fillMaxSize(0.8f)
                                     )
-                                    Text(text = item.nameCofe)
+                                    Text(text = item.coffee_name)
                                 }
                             }
                         }
@@ -150,15 +161,18 @@ fun MenuScreen(
                     ) {
                         Icon(
                             imageVector = ImageVector.vectorResource(id = R.drawable.shop),
-                            contentDescription = "Shop"
+                            contentDescription = "Shop",
+                            tint = black
                         )
                         Icon(
                             imageVector = ImageVector.vectorResource(id = R.drawable.gifts),
-                            contentDescription = "Shop"
+                            contentDescription = "Shop",
+                            tint = border
                         )
                         Icon(
                             imageVector = ImageVector.vectorResource(id = R.drawable.note),
-                            contentDescription = "Shop"
+                            contentDescription = "Shop",
+                            tint = border
                         )
                     }
 
