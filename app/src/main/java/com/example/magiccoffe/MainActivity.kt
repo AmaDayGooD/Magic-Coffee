@@ -1,32 +1,39 @@
 package com.example.magiccoffe
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.example.magiccoffe.ui.theme.screens.FirstScreen
-import com.example.magiccoffe.ui.theme.screens.MapScreen
-import com.example.magiccoffe.ui.theme.screens.MenuScreen
-import com.example.magiccoffe.ui.theme.screens.OrderScreen
-import com.example.magiccoffe.ui.theme.screens.ui.theme.MagicCoffeTheme
+import androidx.core.app.ActivityCompat
+import com.example.magiccoffe.ui.theme.screens.Authorization
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ){
+            val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
+            ActivityCompat.requestPermissions(this, permissions,0)
+        }
+
         setContent {
-
-
+            //OnBoardScreen()
+            Authorization()
+/*
             val navController = rememberNavController()
 
             MagicCoffeTheme {
                 NavHost(
                     navController = navController,
-                    startDestination = "MapScreen",
+                    startDestination = "OnBoardScreen",
                 ) {
                     composable("FirstScreen") {
                         FirstScreen() {
@@ -43,7 +50,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(
-                        "OrderScreen/{item}/{cost}/{image}",
+                        "OrderScreen/{item}/{cost}/{image}/{idCafe}",
                         arguments = listOf(navArgument("item") {
                             type = NavType.StringType
                         },
@@ -52,24 +59,31 @@ class MainActivity : ComponentActivity() {
                             },
                             navArgument("image") {
                                 type = NavType.StringType
-                            })
+                            },
+                        navArgument("idCafe"){
+                            type = NavType.IntType
+                        })
 
                     ) {
                         OrderScreen(
+                            navController = navController,
                             name = it.arguments?.getString("item"),
                             image = it.arguments?.getString("image"),
-                            costCofe = it.arguments?.getFloat("cost")
-                        ) {
-                            navController.navigate("MenuScreen")
-                        }
+                            costCofe = it.arguments?.getFloat("cost"),
+                            idCafe = it.arguments?.getInt("idCafe")
+                        )
                     }
 
                     composable("MapScreen") {
                         MapScreen(navController = navController)
                     }
+                    composable("OnBoardScreen"){
+                        OnBoardScreen(navController = navController)
+                    }
                 }
 
             }
+*/
         }
 
     }

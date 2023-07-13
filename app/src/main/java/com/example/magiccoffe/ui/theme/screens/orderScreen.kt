@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.magiccoffe.R
 import com.example.magiccoffe.ui.theme.screens.ui.theme.*
@@ -36,8 +37,8 @@ import kotlin.math.roundToInt
 @Composable
 //@Preview(showBackground = true)
 fun OrderScreen(
-    name: String?, image: String?, costCofe: Float?,
-    onClick: () -> Unit
+    name: String?, image: String?, costCofe: Float?, idCafe: Int?,
+    navController: NavController
 ) {
     val costCofeSmall = costCofe?.times(1)!!.toDouble()
     val costCofeMedium = costCofe.times(1.3)
@@ -65,7 +66,7 @@ fun OrderScreen(
                 contentDescription = "back",
                 modifier = Modifier
                     .size(width = 24.dp, height = 24.dp)
-                    .clickable { onClick() }
+                    .clickable { navController.navigate("MenuScreen/" + idCafe) }
             )
             Text(
                 text = "Заказ", style = TextStyle(
@@ -128,13 +129,15 @@ fun OrderScreen(
                 ) {
                     Icon(imageVector = Icons.Filled.Remove,
                         contentDescription = "stepper",
-                        Modifier
+                        tint= black,
+                        modifier = Modifier
                             .size(16.dp)
                             .clickable { counter.value--; summ.value = counter.value * cost.value })
-                    Text(text = counter.value.toString())
+                    Text(text = counter.value.toString(), color= black)
                     Icon(imageVector = Icons.Filled.Add,
                         contentDescription = "stepper",
-                        Modifier
+                        tint = black,
+                        modifier = Modifier
                             .size(16.dp)
                             .clickable {
                                 counter.value++
@@ -396,6 +399,7 @@ fun OrderScreen(
                 ) {
                     Text(
                         text = "18 : 10",
+                        color = black,
                         modifier = Modifier
                             .background(color = backcard)
                             .padding(10.dp)

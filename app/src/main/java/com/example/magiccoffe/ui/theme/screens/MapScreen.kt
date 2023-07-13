@@ -40,10 +40,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
-import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.compose.*
 
 @Composable
 fun MapScreen(
@@ -53,16 +50,20 @@ fun MapScreen(
 
     val itemsList = mainViewModal.estList.collectAsState(initial = emptyList())
 
-    val home = LatLng(56.633071770779786, 47.82558143954937)
+    val home = LatLng(56.636506, 47.896149)
     var cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(home, 14f)
     }
+
     Column(modifier = Modifier.fillMaxSize()) {
         GoogleMap(
             modifier = Modifier
                 .fillMaxHeight(.6f)
                 .fillMaxWidth(),
             cameraPositionState = cameraPositionState,
+            uiSettings = MapUiSettings(myLocationButtonEnabled = false),
+            properties = MapProperties(isMyLocationEnabled = true)
+
         ) {
             itemsList.value.forEach() {
                 val mark = LatLng(it.latitude!!, it.longitude!!)
@@ -103,31 +104,31 @@ fun MapScreen(
                     ) {
                         items(itemsList.value) { item ->
                             Card(
-                                modifier = Modifier
-                                    .fillMaxHeight(.8f)
-                                    .fillMaxWidth()
-                                    .padding(10.dp, top = 20.dp)
-                                    .clickable {
-                                        if (approximatelyEqual(
-                                                cameraPositionState.position.target.latitude,
-                                                item.latitude!!,
-                                                0.001
-                                            ) && (approximatelyEqual(
-                                                cameraPositionState.position.target.longitude,
-                                                item.longitude!!,
-                                                0.001
-                                            ))
-                                        ) {
-                                            navController.navigate("MenuScreen/" + item.cafe_id)
-                                        } else {
-                                            Log.d(
-                                                "myTag",
-                                                "что то пошло не так позиция камеры ${cameraPositionState.position.target.longitude} позиция заведения ${item.longitude}"
-                                            );
-                                        }
-                                    },
+                                        modifier = Modifier
+                                            .fillMaxHeight(.8f)
+                                            .fillMaxWidth()
+                                            .padding(10.dp, top = 20.dp)
+                                            .clickable {
+                                                if (approximatelyEqual(
+                                                        cameraPositionState.position.target.latitude,
+                                                        item.latitude!!,
+                                                        0.001
+                                                    ) && (approximatelyEqual(
+                                                        cameraPositionState.position.target.longitude,
+                                                        item.longitude!!,
+                                                        0.001
+                                                    ))
+                                                ) {
+                                                    navController.navigate("MenuScreen/" + item.cafe_id)
+                                                } else {
+                                                    Log.d(
+                                                        "myTag",
+                                                        "что то пошло не так позиция камеры \n ${cameraPositionState.position.target.longitude} позиция заведения ${item.longitude} \n ${cameraPositionState.position.target.latitude} позиция заведения ${item.latitude}"
+                                                    )
+                                                }
+                                            },
                                 shape = RoundedCornerShape(16.dp),
-                                elevation = 5.dp
+                                elevation = 0.dp
                             ) {
                                 Row(
                                     modifier = Modifier

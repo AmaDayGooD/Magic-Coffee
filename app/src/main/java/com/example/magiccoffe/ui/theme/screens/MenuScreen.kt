@@ -40,10 +40,10 @@ fun MenuScreen(
     cafeID: Int?
 ) {
     val itemsList = mainViewModal.itemlist.collectAsState(initial = emptyList())
-    val menuList : MutableList<Menu> = mutableListOf()
+    val menuList: MutableList<Menu> = mutableListOf()
     itemsList.value.forEach()
     {
-        if(it.cafe_id==cafeID){
+        if (it.cafe_id == cafeID) {
             menuList.add(it)
         }
 
@@ -126,8 +126,9 @@ fun MenuScreen(
                                 modifier = Modifier
                                     .size(width = 150.dp, height = 160.dp)
                                     .background(Color(color = button.hashCode()))
-                                    .clickable { val cutUrl = cut(item.image_url)
-                                        navController.navigate("OrderScreen/"+item.coffee_name+"/"+item.price+"/"+ cutUrl)
+                                    .clickable {
+                                        val cutUrl = cut(item.image_url)
+                                        navController.navigate("OrderScreen/" + item.coffee_name + "/" + item.price + "/" + cutUrl + "/" + item.cafe_id)
                                     }, elevation = 0.dp,
                                 shape = RoundedCornerShape(12.dp),
                                 border = BorderStroke(1.dp, color = black)
