@@ -43,7 +43,7 @@ fun OnBoardScreen(navController: NavController) {
                 painter = painterResource(id = R.drawable.logobig),
                 contentDescription = "logo",
                 alignment = Alignment.BottomCenter,
-                //modifier = Modifier.fillMaxSize(2f)
+                modifier = Modifier.fillMaxSize(.6f)
             )
             Text(
                 text = "Magic coffee",
@@ -64,17 +64,17 @@ fun OnBoardScreen(navController: NavController) {
         ) {
             Text(
                 text = "Почувствуй себя",
-                fontFamily = FontFamily(Font(R.font.poppinsmedium)),
+                fontFamily = FontFamily(Font(R.font.poppinsregular)),
                 fontSize = 28.sp
             )
             Text(
                 text = "бариста!",
-                fontFamily = FontFamily(Font(R.font.poppinsmedium)),
+                fontFamily = FontFamily(Font(R.font.poppinsregular)),
                 fontSize = 28.sp
             )
             Text(
                 text = "Волшебный кофе под заказ.",
-                fontFamily = FontFamily(Font(R.font.poppinsmedium)),
+                fontFamily = FontFamily(Font(R.font.poppinsregular)),
                 fontSize = 18.sp,
                 color = border
             )
@@ -85,7 +85,7 @@ fun OnBoardScreen(navController: NavController) {
         ) {
             Card(
                 modifier = Modifier
-                    .size(width = 20.dp, height = 10.dp)
+                    .size(width = 40.dp, height = 10.dp)
                     .padding(end = 10.dp), backgroundColor = button,
                 shape = RoundedCornerShape(50.dp)
             ) {}
@@ -112,7 +112,7 @@ fun OnBoardScreen(navController: NavController) {
             Card(
                 modifier = Modifier
                     .size(60.dp, 60.dp)
-                    .clickable{ navController.navigate("MapScreen") },
+                    .clickable{ navController.navigate("Authorization") },
                 backgroundColor = button,
                 elevation = 0.dp,
                 shape = RoundedCornerShape(50.dp),

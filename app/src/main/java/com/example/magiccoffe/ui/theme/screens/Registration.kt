@@ -1,6 +1,5 @@
 package com.example.magiccoffe.ui.theme.screens
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -34,11 +32,11 @@ import com.example.magiccoffe.ui.theme.screens.ui.theme.button
 import com.example.magiccoffe.ui.theme.screens.ui.theme.white
 
 @Composable
-fun Authorization(navController: NavController) {
-    val mContext = LocalContext.current
-    val login = remember { mutableStateOf(TextFieldValue("")) }
-    val password = remember { mutableStateOf(TextFieldValue("")) }
-    val placeholder = remember { mutableStateOf("Логин") }
+fun Registration(navController: NavController) {
+    val nameUser = remember { mutableStateOf(TextFieldValue("")) }
+    val numberPhone = remember { mutableStateOf(TextFieldValue("")) }
+    val emailUser = remember { mutableStateOf(TextFieldValue("")) }
+    val passwordUser = remember { mutableStateOf(TextFieldValue("")) }
     val check = remember { mutableStateOf(false) }
 
     Card(
@@ -59,56 +57,59 @@ fun Authorization(navController: NavController) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = "",
-                    modifier = Modifier
-                        .padding(top = 10.dp)
-                        .clickable {
-                            navController.navigate("OnBoardScreen") {
-                                popUpTo("OnBoardScreen")
+                    modifier = Modifier.padding(top = 10.dp).clickable {
+                        navController.navigate("Authorization") {
+                            popUpTo("Authorization"){
+                                inclusive=true
                             }
-                        },
+                        }
+                    },
                     tint = black
                 )
             }
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Войти",
+                    text = "Зарегистрироваться",
                     fontFamily = FontFamily(Font(R.font.poppinsmedium)),
                     fontSize = 22.sp,
                     modifier = Modifier.padding(bottom = 10.dp),
                     color = black
                 )
                 Text(
-                    text = "Добро пожаловать",
+                    text = "Создать аккаунт здесь",
                     fontFamily = FontFamily(Font(R.font.poppinsregular)),
                     fontSize = 14.sp,
                     modifier = Modifier.padding(bottom = 25.dp),
                     color = border
                 )
             }
-            Column(
-                modifier = Modifier.fillMaxWidth(1.2f)
-            ) {
+
+            Column {
                 TextField(
-                    value = login.value,
+                    value = nameUser.value,
                     onValueChange = {
-                        login.value = it
+                        nameUser.value = it
                     },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 20.dp),
                     placeholder = {
-                        Text(text = "Адрес электронной почты")
+                        Text(text = "Имя пользователя")
                     },
                     leadingIcon = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                imageVector = ImageVector.vectorResource(id = R.drawable.message),
+                                imageVector = ImageVector
+                                    .vectorResource(id = R.drawable.profile),
                                 contentDescription = "",
                                 tint = black,
                                 modifier = Modifier.padding(end = 10.dp)
                             )
                             Icon(
-                                imageVector = ImageVector.vectorResource(id = R.drawable.line),
+                                imageVector = ImageVector
+                                    .vectorResource(id = R.drawable.line),
                                 contentDescription = "",
                                 tint = border
                             )
@@ -122,19 +123,102 @@ fun Authorization(navController: NavController) {
                         focusedIndicatorColor = border,
                         placeholderColor = border,
                         textColor = black,
-                        cursorColor = border
+                        cursorColor = black
                     ),
 
                     )
-
                 TextField(
-                    value = password.value,
+                    value = numberPhone.value,
                     onValueChange = {
-                        password.value = it
+                        numberPhone.value = it
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 20.dp),
+                        .padding(bottom = 20.dp),
+                    placeholder = {
+                        Text(text = "Номер мобильного телефона")
+                    },
+                    leadingIcon = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = ImageVector
+                                    .vectorResource(id = R.drawable.smartphone),
+                                contentDescription = "",
+                                tint = black,
+                                modifier = Modifier.padding(end = 10.dp)
+                            )
+                            Icon(
+                                imageVector = ImageVector
+                                    .vectorResource(id = R.drawable.line),
+                                contentDescription = "",
+                                tint = border
+                            )
+                        }
+                    },
+                    maxLines = 1,
+                    shape = RoundedCornerShape(0.dp),
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = white,
+                        unfocusedIndicatorColor = border,
+                        focusedIndicatorColor = border,
+                        placeholderColor = border,
+                        textColor = black,
+                        cursorColor = black
+                    ),
+
+                    )
+                TextField(
+                    value = emailUser.value,
+                    onValueChange = {
+                        emailUser.value = it
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 20.dp),
+                    placeholder = {
+                        Text(text = "Адрес электронной почты")
+                    },
+                    leadingIcon = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = ImageVector
+                                    .vectorResource(id = R.drawable.message),
+                                contentDescription = "",
+                                tint = black,
+                                modifier = Modifier.padding(end = 10.dp)
+                            )
+                            Icon(
+                                imageVector = ImageVector
+                                    .vectorResource(id = R.drawable.line),
+                                contentDescription = "",
+                                tint = border
+                            )
+                        }
+                    },
+                    maxLines = 1,
+                    shape = RoundedCornerShape(0.dp),
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = white,
+                        unfocusedIndicatorColor = border,
+                        focusedIndicatorColor = border,
+                        placeholderColor = border,
+                        textColor = black,
+                        cursorColor = black
+                    ),
+
+                    )
+                TextField(
+                    value = passwordUser.value,
+                    onValueChange = {
+                        passwordUser.value = it
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 20.dp),
                     placeholder = {
                         Text(text = "Пароль")
                     },
@@ -143,13 +227,15 @@ fun Authorization(navController: NavController) {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
-                                imageVector = ImageVector.vectorResource(id = R.drawable.message),
+                                imageVector = ImageVector
+                                    .vectorResource(id = R.drawable.lock),
                                 contentDescription = "",
                                 tint = black,
                                 modifier = Modifier.padding(end = 10.dp)
                             )
                             Icon(
-                                imageVector = ImageVector.vectorResource(id = R.drawable.line),
+                                imageVector = ImageVector
+                                    .vectorResource(id = R.drawable.line),
                                 contentDescription = "",
                                 tint = border
                             )
@@ -178,66 +264,23 @@ fun Authorization(navController: NavController) {
                     visualTransformation = if (check.value) VisualTransformation.None else PasswordVisualTransformation(),
                 )
 
+            }
+            Text(
+                text = "Регистрируясь, вы соглашаетесь с нашими\nусловиями использования",
+                color = button
+            )
 
-            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(.2f),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Забыли пароль?",
-                    fontFamily = FontFamily(Font(R.font.poppinsmedium)),
-                    fontSize = 14.sp,
-                    color = button,
-                    modifier = Modifier.clickable { })
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(.45f),
+                    .fillMaxHeight(.3f),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.Bottom
             ) {
                 Card(
                     modifier = Modifier
                         .size(60.dp, 60.dp)
-                        .clickable {
-                            if (login.value.text.isEmpty() and password.value.text.isEmpty()) {
-                                Toast.makeText(
-                                    mContext,
-                                    "Введите логин и пароль",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            } else {
-                                if (login.value.text.isEmpty()) {
-                                    Toast.makeText(
-                                        mContext,
-                                        "Введите логин",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                if (password.value.text.isEmpty()) {
-                                    Toast.makeText(
-                                        mContext,
-                                        "Введите пароль",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                if (login.value.text.isNotEmpty() and password.value.text.isNotEmpty()) {
-                                    val regex = Regex(".*@.*\\..*")
-                                    if(login.value.text.matches(regex)) {
-                                        Toast.makeText(mContext,"Авторизация прошла успешно",Toast.LENGTH_SHORT).show()
-                                        navController.navigate("MapScreen")
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(mContext,"Введите правильный адрес электронной почты",Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-                            }
-                        },
+                        .clickable { navController.navigate("MapScreen") },
                     backgroundColor = button,
                     elevation = 0.dp,
                     shape = RoundedCornerShape(50.dp),
@@ -253,22 +296,27 @@ fun Authorization(navController: NavController) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(.8f),
+                    .fillMaxHeight(.6f),
                 verticalAlignment = Alignment.Bottom
             ) {
                 Text(
-                    text = "Впервые? ",
+                    text = "Уже зарегистрировались? ",
                     fontFamily = FontFamily(Font(R.font.poppinsregular)),
                     fontSize = 14.sp,
                     color = border
                 )
-                Text(text = "Зарегистрироваться.",
+                Text(text = " Войти.",
                     fontFamily = FontFamily(Font(R.font.poppinsregular)),
                     fontSize = 14.sp,
                     color = button,
-                    modifier = Modifier.clickable { navController.navigate("Registration")}
+                    modifier = Modifier.clickable {
+                        navController.navigate("Authorization") {
+                            popUpTo("Authorization")
+                        }
+                    }
                 )
             }
         }
     }
 }
+

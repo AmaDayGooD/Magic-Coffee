@@ -6,7 +6,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.app.ActivityCompat
-import com.example.magiccoffe.ui.theme.screens.Authorization
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.magiccoffe.ui.theme.screens.*
+import com.example.magiccoffe.ui.theme.screens.ui.theme.MagicCoffeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,16 +25,19 @@ class MainActivity : ComponentActivity() {
                 this,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
-        ){
-            val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
-            ActivityCompat.requestPermissions(this, permissions,0)
+        ) {
+            val permissions = arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            ActivityCompat.requestPermissions(this, permissions, 0)
         }
 
         setContent {
             //OnBoardScreen()
-            Authorization()
-/*
+
             val navController = rememberNavController()
+            //Authorization(navController)
 
             MagicCoffeTheme {
                 NavHost(
@@ -42,11 +51,16 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    composable("MenuScreen/{id}",
-                    arguments = listOf(navArgument("id"){
-                        type = NavType.IntType
-                    })) {
-                        MenuScreen(navController = navController, cafeID = it.arguments?.getInt("id"))
+                    composable(
+                        "MenuScreen/{id}",
+                        arguments = listOf(navArgument("id") {
+                            type = NavType.IntType
+                        })
+                    ) {
+                        MenuScreen(
+                            navController = navController,
+                            cafeID = it.arguments?.getInt("id")
+                        )
                     }
 
                     composable(
@@ -60,9 +74,9 @@ class MainActivity : ComponentActivity() {
                             navArgument("image") {
                                 type = NavType.StringType
                             },
-                        navArgument("idCafe"){
-                            type = NavType.IntType
-                        })
+                            navArgument("idCafe") {
+                                type = NavType.IntType
+                            })
 
                     ) {
                         OrderScreen(
@@ -77,15 +91,19 @@ class MainActivity : ComponentActivity() {
                     composable("MapScreen") {
                         MapScreen(navController = navController)
                     }
-                    composable("OnBoardScreen"){
+                    composable("OnBoardScreen") {
                         OnBoardScreen(navController = navController)
                     }
+                    composable("Authorization") {
+                        Authorization(navController = navController)
+                    }
+                    composable("Registration"){
+                        Registration(navController = navController)
+                    }
                 }
-
             }
-*/
         }
-
     }
 }
+
 
