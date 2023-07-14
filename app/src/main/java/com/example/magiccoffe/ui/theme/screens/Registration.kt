@@ -19,11 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -147,13 +146,14 @@ fun Registration(mainViewModal: MainViewModal = viewModel(factory = MainViewModa
                     onValueChange = {
                         numberPhone.value = it
                     },
+
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 20.dp),
                     placeholder = {
                         Text(text = "Номер мобильного телефона")
-                    },
-                    leadingIcon = {
+                    }
+                    ,leadingIcon = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -304,7 +304,7 @@ fun Registration(mainViewModal: MainViewModal = viewModel(factory = MainViewModa
                                 emailUser = emailUser.value.text
                             )
                             mainViewModal.insertUser(user)
-                            Toast.makeText(mContext,"Создание пользователя: ${nameUser.value.text} прошло успешно ${nameUser.value.text}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(mContext,"Создание пользователя: ${nameUser.value.text} прошло успешно", Toast.LENGTH_SHORT).show()
                         },
                     backgroundColor = button,
                     elevation = 0.dp,
@@ -345,3 +345,34 @@ fun Registration(mainViewModal: MainViewModal = viewModel(factory = MainViewModa
     }
 }
 
+private fun creditCardFilter(text: AnnotatedString): TransformedText {
+    val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text
+    var out = ""
+    for (i in trimmed.indices) {
+        out += trimmed[i]
+        if (i % 4 == 3 && i != 15) out += "-"
+    }
+    val creditCardOffsetTranslator = object : OffsetMapping {
+        override fun originalToTransformed(offset: Int): Int {
+            return when {
+                offset <= 3 -> offset
+                offset <= 7 -> offset + 1
+                offset <= 11 -> offset + 2
+                offset <= 16 -> offset + 3
+                else -> 19
+            }
+        }
+
+        override fun transformedToOriginal(offset: Int): Int {
+            return when {
+                offset <= 4 -> offset
+                offset <= 9 -> offset - 1
+                offset <= 14 -> offset - 2
+                offset <= 19 -> offset - 3
+                else -> 16
+            }
+        }
+    }
+
+    return TransformedText(AnnotatedString(out), creditCardOffsetTranslator)
+}

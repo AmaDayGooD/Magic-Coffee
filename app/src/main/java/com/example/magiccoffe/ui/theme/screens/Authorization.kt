@@ -12,6 +12,7 @@ import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material.icons.rounded.East
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -26,20 +27,26 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.magiccoffe.MainViewModal
 import com.example.magiccoffe.R
+import com.example.magiccoffe.roomDB.Users
 import com.example.magiccoffe.ui.theme.screens.ui.theme.black
 import com.example.magiccoffe.ui.theme.screens.ui.theme.border
 import com.example.magiccoffe.ui.theme.screens.ui.theme.button
 import com.example.magiccoffe.ui.theme.screens.ui.theme.white
 
 @Composable
-fun Authorization(navController: NavController) {
+fun Authorization(navController: NavController,
+                  mainViewModal: MainViewModal = viewModel(factory = MainViewModal.factory)
+) {
     val mContext = LocalContext.current
     val login = remember { mutableStateOf(TextFieldValue("")) }
     val password = remember { mutableStateOf(TextFieldValue("")) }
-    val placeholder = remember { mutableStateOf("Логин") }
     val check = remember { mutableStateOf(false) }
+    val itemsList = mainViewModal.userList.collectAsState(initial = emptyList())
+    val userList: MutableList<Users> = mutableListOf()
 
     Card(
         modifier = Modifier
@@ -205,35 +212,68 @@ fun Authorization(navController: NavController) {
                         .size(60.dp, 60.dp)
                         .clickable {
                             if (login.value.text.isEmpty() and password.value.text.isEmpty()) {
-                                Toast.makeText(
-                                    mContext,
-                                    "Введите логин и пароль",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast
+                                    .makeText(
+                                        mContext,
+                                        "Введите логин и пароль",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                    .show()
                             } else {
                                 if (login.value.text.isEmpty()) {
-                                    Toast.makeText(
-                                        mContext,
-                                        "Введите логин",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast
+                                        .makeText(
+                                            mContext,
+                                            "Введите логин",
+                                            Toast.LENGTH_SHORT
+                                        )
+                                        .show()
                                 }
                                 if (password.value.text.isEmpty()) {
-                                    Toast.makeText(
-                                        mContext,
-                                        "Введите пароль",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast
+                                        .makeText(mContext, "Введите пароль", Toast.LENGTH_SHORT)
+                                        .show()
                                 }
                                 if (login.value.text.isNotEmpty() and password.value.text.isNotEmpty()) {
                                     val regex = Regex(".*@.*\\..*")
-                                    if(login.value.text.matches(regex)) {
-                                        Toast.makeText(mContext,"Авторизация прошла успешно",Toast.LENGTH_SHORT).show()
-                                        navController.navigate("MapScreen")
-                                    }
-                                    else
-                                    {
-                                        Toast.makeText(mContext,"Введите правильный адрес электронной почты",Toast.LENGTH_SHORT).show()
+                                    if (login.value.text.matches(regex)
+                                    ) {
+
+                                        itemsList.value.forEach loop@
+                                        {
+                                            if (it.emailUser == login.value.text && it.passwordUser == password.value.text) {
+                                                Toast
+                                                    .makeText(
+                                                        mContext,
+                                                        "Авторизация прошла успешно",
+                                                        Toast.LENGTH_SHORT
+                                                    )
+                                                    .show()
+                                                navController.navigate("MapScreen") {
+                                                    popUpTo("MapScreen") {
+                                                        inclusive = false
+                                                    }
+                                                }
+                                                return@clickable
+                                            }
+                                        }
+                                        Toast
+                                            .makeText(
+                                                mContext,
+                                                "Неверный логин/пароль",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                            .show()
+                                        return@clickable
+
+                                    } else {
+                                        Toast
+                                            .makeText(
+                                                mContext,
+                                                "Введите правильный адрес электронной почты",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                            .show()
                                     }
                                 }
                             }
@@ -272,3 +312,4 @@ fun Authorization(navController: NavController) {
         }
     }
 }
+

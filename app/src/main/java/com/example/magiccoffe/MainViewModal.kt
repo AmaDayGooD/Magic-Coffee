@@ -13,6 +13,7 @@ class MainViewModal(val database: DataBase) : ViewModel() {
 
     val itemlist = database.dao.getAll()
     val estList = database.dao.getAllEst()
+    val userList = database.dao.getAllUsers()
 
     val newItemUser: Users?=null
 
